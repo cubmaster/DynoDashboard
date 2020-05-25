@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "I19SCgLBAYy7r9shzU6NVkwNvP7E5iEer9gbCUd9dXB1AZOM1e44E5/+dh2yxXTmqMGM9tFItpKaA7iwkM9O/g==",
+  "success": true,
+  "projectFilePath": "C:\\code\\test\\gridster\\Server\\Server\\Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\wmcclellan001\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,30 @@
+<div class="options">
+
+  <button mat-mini-fab (click)="addItem()" class="add-button cols-2"  *ngIf="EditMode">
+    <mat-icon>add</mat-icon>
+  </button>
+  <button mat-mini-fab  (click)="edit($event)"  class="cols-2">
+    <mat-icon>edit</mat-icon>
+  </button>
+</div>
+
+<gridster [options]="options"  [ngClass]="{'editmode': EditMode,'runmode': !EditMode}">
+  <gridster-item [item]="item" *ngFor="let item of dashboard">
+    <div class="button-holder" *ngIf="EditMode">
+
+
+
+      <button mat-mini-fab  (mousedown)="removeItem($event, item)"
+              (touchstart)="removeItem($event, item)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <mat-select  mat-select  [ngModel]="item.widget" (ngModelChange)="widgetChanged($event,item)" >
+        <mat-option value="comp1">Comp1</mat-option>
+        <mat-option value="comp2">Comp2</mat-option>
+        <mat-option value="comp3">Comp3</mat-option>
+      </mat-select>
+
+    </div>
+    <div appDynoComponent [EditMode]="!!EditMode"   [widget]="item.widget" [(parameters)]="item.parameters"></div>
+  </gridster-item>
+</gridster>

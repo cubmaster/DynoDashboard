@@ -1,0 +1,10 @@
+.editmode{
+  background-color:gray;
+}
+.runmode{
+  background-color:whitesmoke;
+}
+.button-holder{
+  background-color: lightgray;
+  cursor: grab;
+}

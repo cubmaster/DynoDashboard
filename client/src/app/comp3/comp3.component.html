@@ -1,0 +1,6 @@
+<div *ngIf="!EditMode">
+  <p>{{Input3}}</p>
+</div>
+<div *ngIf="EditMode">
+  <input type="text" (change)="PropertyChange($event)"  [value]="Input3"  id="Input3"  >
+</div>
