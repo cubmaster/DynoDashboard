@@ -32,6 +32,7 @@ namespace Server
         {
             services.AddControllers();
             services.AddSingleton<IWeatherService, WeatherService>();
+            services.AddSingleton<IStockService, StockService>();
             services.AddSingleton<IWebSocketHandler,  WebSocketHandler>();
 
         }

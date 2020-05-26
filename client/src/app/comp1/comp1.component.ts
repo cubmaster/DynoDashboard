@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {SocketService} from '../services/socket.service';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import {ToastrService} from 'ngx-toastr';
 
 
 @Component({
@@ -15,24 +16,20 @@ export class Comp1Component implements OnInit {
  @Input() EditMode: boolean = false;
  public results: any;
 
- private  CHAT_URL = 'ws://localhost:5000/ws';
- private destroyed$: Subject<any> = new Subject<any>();
- messages: string[] = [];
 
-  constructor(private wsService: SocketService) { }
+
+  constructor(private wsService: SocketService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.wsService.connect(this.CHAT_URL)
-      .subscribe(messages => {
-          //var obj = JSON.parse(messages);
-          console.log(messages);
-          if(messages.MessageType === 'Weather'){
-            this.results = JSON.parse(messages.Payload);
-          }
 
-    },err => {
-      console.error(err);
+    this.wsService.Stocks$.subscribe(value => {
+      console.log(value);
+      this.results = JSON.parse(value.Payload);
     });
+
+
+
+
 
 
   }

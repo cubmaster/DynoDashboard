@@ -1,4 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges} from '@angular/core';
+import {Subject} from 'rxjs';
+import {SocketService} from '../services/socket.service';
+import {ToastrService} from 'ngx-toastr';
 
 
 @Component({
@@ -10,9 +13,23 @@ export class Comp2Component implements OnInit {
   @Input() Input2 = 'Defaul2';
   @Output() OnChange: EventEmitter<Event> = new EventEmitter<Event>();
   @Input() EditMode: boolean = false;
-  constructor() { }
+  public results: string;
+  private  CHAT_URL = 'ws://localhost:5000/ws';
+  private destroyed$: Subject<any> = new Subject<any>();
+  messages: string[] = [];
+
+  constructor(private wsService: SocketService, private toastr: ToastrService) { }
+
 
   ngOnInit(): void {
+
+
+
+    this.wsService.Weather$.subscribe(value => {
+      console.log(value);
+      this.results = JSON.parse(value.Payload);
+    });
+
   }
   PropertyChange(event: Event){
     this.OnChange.emit(event);

@@ -17,6 +17,8 @@ import { Comp2Component } from './comp2/comp2.component';
 import { Comp3Component } from './comp3/comp3.component';
 import { DynoDashboardComponent } from './dyno-dashboard/dyno-dashboard.component';
 import { DynoComponentDirective } from './dyno-dashboard/dyno-component.directive';
+import {ToastrModule} from 'ngx-toastr';
+import {SocketService} from './services/socket.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,9 +40,10 @@ import { DynoComponentDirective } from './dyno-dashboard/dyno-component.directiv
     MatSelectModule,
     MatSidenavModule,
     MatMenuModule,
-    FormsModule
+    FormsModule,
+    ToastrModule.forRoot() // ToastrModule added
   ],
-  providers: [],
+  providers: [SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

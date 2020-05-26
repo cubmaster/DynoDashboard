@@ -18,3 +18,4 @@ C:\code\test\gridster\Server\Server\obj\Debug\netcoreapp3.1\Server.dll
 C:\code\test\gridster\Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
 C:\code\test\gridster\Server\Server\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\code\test\gridster\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.CopyComplete
+C:\code\test\gridster\Server\Server\bin\Debug\netcoreapp3.1\RestSharp.dll

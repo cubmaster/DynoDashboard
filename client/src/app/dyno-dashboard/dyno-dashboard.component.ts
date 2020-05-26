@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {CompactType, DisplayGrid, Draggable, GridsterConfig, GridsterItem, GridType, PushDirections, Resizable} from 'angular-gridster2';
+import {Subject} from 'rxjs';
+import {SocketService} from '../services/socket.service';
+import {ToastrService} from 'ngx-toastr';
 
 interface Safe extends GridsterConfig {
   draggable: Draggable;
@@ -15,10 +18,28 @@ export class DynoDashboardComponent implements OnInit {
   options: Safe;
   dashboard: Array<GridsterItem>;
   EditMode: boolean;
+  private  CHAT_URL = 'ws://localhost:5000/ws';
 
-  constructor() { }
+  constructor(private wsService: SocketService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+
+    this.wsService.connect(this.CHAT_URL).subscribe(messages => {
+         switch (messages.MessageType) {
+           case 'name': {}
+           case 'announce': {
+             this.toastr.success(messages.MessageType, messages.Payload);
+             break;
+           }
+           default: {
+             // console.log(messages);
+             break;
+           }
+         }
+
+     }, err => {
+       console.error(err);
+     });
     this.options = {
       gridType: GridType.Fit,
       compactType: CompactType.None,

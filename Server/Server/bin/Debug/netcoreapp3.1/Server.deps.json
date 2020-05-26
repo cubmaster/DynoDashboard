@@ -25,6 +25,7 @@
       "Server/1.0.0": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.3",
+          "RestSharp": "106.11.5-alpha.0.2",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "3.1.0.0",
@@ -324,6 +325,17 @@
         },
         "compile": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "RestSharp/106.11.5-alpha.0.2": {
+        "runtime": {
+          "lib/netstandard2.0/RestSharp.dll": {
+            "assemblyVersion": "106.11.5.0",
+            "fileVersion": "106.11.5.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/RestSharp.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
@@ -2032,6 +2044,13 @@
       "sha512": "sha512-6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
       "path": "newtonsoft.json/12.0.3",
       "hashPath": "newtonsoft.json.12.0.3.nupkg.sha512"
+    },
+    "RestSharp/106.11.5-alpha.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bT4K8zaZ3HeAht/w6gpQCK0FKtT4COdd/disPrVNZVmJ8ut29/vdp9AlB1F0VrI5qWLYBkgJcD9JLcyEwjCKKA==",
+      "path": "restsharp/106.11.5-alpha.0.2",
+      "hashPath": "restsharp.106.11.5-alpha.0.2.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
       "type": "referenceassembly",
