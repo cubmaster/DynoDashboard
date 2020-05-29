@@ -32,14 +32,23 @@ export class DynoDashboardComponent implements OnInit {
              break;
            }
            default: {
-             // console.log(messages);
+             //console.log(messages);
              break;
            }
          }
 
      }, err => {
        console.error(err);
-     });
+     } );
+
+
+
+
+
+
+
+
+
     this.options = {
       gridType: GridType.Fit,
       compactType: CompactType.None,

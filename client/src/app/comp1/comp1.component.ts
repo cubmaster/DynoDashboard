@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {SocketService} from '../services/socket.service';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {Observable, Subject} from 'rxjs';
+import {mergeMap, share, takeUntil} from 'rxjs/operators';
 import {ToastrService} from 'ngx-toastr';
 
 
@@ -22,16 +22,17 @@ export class Comp1Component implements OnInit {
 
   ngOnInit(): void {
 
-    this.wsService.Stocks$.subscribe(value => {
-      console.log(value);
-      this.results = JSON.parse(value.Payload);
-    });
+
+
+    const obj = {Command: 'Weather', data:''};
 
 
 
-
-
-
+    this.wsService.getData(obj).pipe(share()).subscribe(
+      x => console.log(x),
+      e => console.error(e),
+      () => console.info('Weather complete')
+    ).unsubscribe();
   }
 
   PropertyChange(event: Event){

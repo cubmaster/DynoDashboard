@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange,
 import {Subject} from 'rxjs';
 import {SocketService} from '../services/socket.service';
 import {ToastrService} from 'ngx-toastr';
+import {share} from 'rxjs/operators';
 
 
 @Component({
@@ -17,18 +18,18 @@ export class Comp2Component implements OnInit {
   private  CHAT_URL = 'ws://localhost:5000/ws';
   private destroyed$: Subject<any> = new Subject<any>();
   messages: string[] = [];
-
   constructor(private wsService: SocketService, private toastr: ToastrService) { }
 
 
   ngOnInit(): void {
 
+     const obj = {Command:'Stock',data:'msft'};
 
-
-    this.wsService.Weather$.subscribe(value => {
-      console.log(value);
-      this.results = JSON.parse(value.Payload);
-    });
+     this.wsService.getData(obj).pipe(share()).subscribe(
+       x => console.log(x),
+       e => console.error(e),
+       ()=>  console.info('stock complete')
+     ).unsubscribe();
 
   }
   PropertyChange(event: Event){

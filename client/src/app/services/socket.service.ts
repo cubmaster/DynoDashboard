@@ -1,45 +1,39 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import {Observable, Observer, of, Subject} from 'rxjs';
+import {combineLatest, merge, Observable, Observer, of, Subject} from 'rxjs';
+import {combineAll, concatAll, map, mergeAll, mergeMap, multicast, retry, share} from 'rxjs/operators';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService  {
+  private weather$: Observable<any>;
   constructor() { }
   public Socket: WebSocketSubject<any> = null;
 
+  public hooks: Map<string, Observable<any> >  = new Map<string, Observable<any> >();
 
-
-  public  Stocks$: Observable<any>;
-
-  public Weather$: Observable<any>;
+  public data: Observable<any> = new Observable<any>()  ;
+  private stocks$: Observable<any>;
 
   public connect(url): Observable<any> {
       this.Socket =  webSocket(url);
-      this.Weather$ = this.Socket.multiplex(
-      () => ({
-        Command: 'Weather',
-        Data:  ''
-      }),
-      () => ({unsubscribe: 'Weather'}),
-      message => message.MessageType === 'Weather'
-    );
-      this.Stocks$ = this.Socket.multiplex(
-          () => ({
-            Command: 'Stock',
-            Data:  'msft'
-          }),
-          () => ({unsubscribe: 'Stock'}),
-          message => message.MessageType === 'Stock'
-        );
-
-
-
       return this.Socket.asObservable();
   }
 
+
+  public getData(obj: any)
+  {
+
+    return this.Socket.multiplex(
+      () => (obj),
+      () => ({unsubscribe: obj.Command}),
+      message => message.MessageType ===  obj.Command
+
+    );
+
+  }
 
 
 }
