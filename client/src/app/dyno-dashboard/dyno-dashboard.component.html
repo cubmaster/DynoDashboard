@@ -11,7 +11,7 @@
 <gridster [options]="options"  [ngClass]="{'editmode': EditMode,'runmode': !EditMode}">
   <gridster-item [item]="item" *ngFor="let item of dashboard">
     <div class="button-holder" *ngIf="EditMode">
-
+    
 
 
       <button mat-mini-fab  (mousedown)="removeItem($event, item)"

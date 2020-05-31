@@ -105,11 +105,20 @@ export class DynoDashboardComponent implements OnInit {
       disableWarnings: false,
       scrollToNewItems: false
     };
-    this.dashboard = [
-      {cols: 1, rows: 1, y: 0, x: 0, widget: 'comp3', parameters: {Input3: 'test3'}},
-      {cols: 1, rows: 1, y: 0, x: 0, widget: 'comp2', parameters: {Input2: 'test2'}},
-      {cols: 1, rows: 1, y: 0, x: 0, widget: 'comp1', parameters: {Input1: 'test1'}},
-    ];
+
+    if (!window.localStorage.getItem('dashboard')){
+      const db =  [
+        {cols: 1, rows: 1, y: 0, x: 0 , widget: 'comp3', parameters: {Input3: 'test3'}},
+        {cols: 1, rows: 1, y: 0, x: 0,  widget: 'comp2', parameters: {Input2: 'test2'}},
+        {cols: 1, rows: 1, y: 0, x: 0, widget: 'comp1', parameters: {Input1: 'test1'}},
+      ];
+
+      this.dashboard = db;
+      this.saveDashboard();
+    }else{
+      this.dashboard = JSON.parse(window.localStorage.getItem('dashboard'));
+    }
+
   }
 
 
@@ -117,10 +126,12 @@ export class DynoDashboardComponent implements OnInit {
     $event.preventDefault();
     $event.stopPropagation();
     this.dashboard.splice(this.dashboard.indexOf(item), 1);
+    this.saveDashboard();
   }
 
   addItem() {
     this.dashboard.push({x: 0, y: 0, cols: 1, rows: 1, component: 'comp1'});
+    this.saveDashboard();
   }
 
   edit(event: MouseEvent){
@@ -134,6 +145,7 @@ export class DynoDashboardComponent implements OnInit {
   widgetChanged(value: string, item: GridsterItem ){
     const elem: Element = (event.target as Element);
     item.widget = value;
+    this.saveDashboard();
   }
 
 
@@ -141,7 +153,11 @@ export class DynoDashboardComponent implements OnInit {
     if (this.options.api && this.options.api.optionsChanged) {
       this.options.api.optionsChanged();
     }
-    console.log(this.dashboard);//save to api here
+    this.saveDashboard();
+  }
+
+  saveDashboard(){
+    window.localStorage.setItem('dashboard', JSON.stringify((this.dashboard)));
   }
 
 }
