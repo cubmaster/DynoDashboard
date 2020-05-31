@@ -8,32 +8,31 @@ import {combineAll, concatAll, map, mergeAll, mergeMap, multicast, retry, share}
   providedIn: 'root'
 })
 export class SocketService  {
-  private weather$: Observable<any>;
+
   constructor() { }
   public Socket: WebSocketSubject<any> = null;
 
-  public hooks: Map<string, Observable<any> >  = new Map<string, Observable<any> >();
-
-  public data: Observable<any> = new Observable<any>()  ;
-  private stocks$: Observable<any>;
-
-  public connect(url): Observable<any> {
-      this.Socket =  webSocket(url);
-      return this.Socket.asObservable();
+  private  CHAT_URL = 'ws://localhost:5000/ws';
+  public connect(): Observable<any>
+  {
+    return webSocket(this.CHAT_URL).asObservable();
   }
-
-
-  public getData(obj: any)
+  public getData( obj: any)
   {
 
-    return this.Socket.multiplex(
+    return webSocket(this.CHAT_URL).multiplex(
       () => (obj),
       () => ({unsubscribe: obj.Command}),
-      message => message.MessageType ===  obj.Command
+      (message: Message) => message.MessageType ===  obj.Command
 
     );
 
   }
 
 
+}
+
+export class Message{
+  MessageType: string;
+  Payload: object;
 }

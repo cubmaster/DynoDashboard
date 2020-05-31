@@ -25,5 +25,19 @@ namespace Server.Handlers
                 await theSocket.SendAsync(byteArraySegment, WebSocketMessageType.Text, true, CancellationToken.None);
             }
         }
+        public async Task SendToOthers(string message,  WebSocket  socketsToNotSendTo)
+        {
+           
+            var Others = _users.TakeWhile(x => x.Value.GetHashCode() != socketsToNotSendTo.GetHashCode() 
+                                               && socketsToNotSendTo.State == WebSocketState.Open);
+            foreach (var theSocket in Others)
+            {
+          
+                
+                var stringAsBytes = System.Text.Encoding.ASCII.GetBytes(message);
+                var byteArraySegment = new ArraySegment<byte>(stringAsBytes, 0, stringAsBytes.Length);
+                await theSocket.Value.SendAsync(byteArraySegment, WebSocketMessageType.Text, true, CancellationToken.None);
+            }
+        }
     }
 }

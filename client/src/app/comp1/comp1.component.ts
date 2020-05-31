@@ -3,6 +3,7 @@ import {SocketService} from '../services/socket.service';
 import {Observable, Subject} from 'rxjs';
 import {mergeMap, share, takeUntil} from 'rxjs/operators';
 import {ToastrService} from 'ngx-toastr';
+import {jsGlobalObjectValue} from '@angular/compiler-cli/src/ngtsc/partial_evaluator/src/known_declaration';
 
 
 @Component({
@@ -11,7 +12,7 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./comp1.component.css']
 })
 export class Comp1Component implements OnInit {
- @Input() Input1: string = 'deafult1';
+ @Input() Input1: string = 'default1';
  @Output() OnChange: EventEmitter<Event> = new EventEmitter<Event>();
  @Input() EditMode: boolean = false;
  public results: any;
@@ -24,15 +25,11 @@ export class Comp1Component implements OnInit {
 
 
 
-    const obj = {Command: 'Weather', data:''};
+    const obj = {Command: 'Weather', data: ''};
 
 
 
-    this.wsService.getData(obj).pipe(share()).subscribe(
-      x => console.log(x),
-      e => console.error(e),
-      () => console.info('Weather complete')
-    ).unsubscribe();
+    this.wsService.getData(obj).subscribe(x =>  this.results = JSON.parse(x.Payload) );
   }
 
   PropertyChange(event: Event){

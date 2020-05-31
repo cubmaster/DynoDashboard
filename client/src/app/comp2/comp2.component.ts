@@ -13,7 +13,7 @@ import {share} from 'rxjs/operators';
 export class Comp2Component implements OnInit {
   @Input() Input2 = 'Defaul2';
   @Output() OnChange: EventEmitter<Event> = new EventEmitter<Event>();
-  @Input() EditMode: boolean = false;
+  @Input() EditMode = false;
   public results: string;
   private  CHAT_URL = 'ws://localhost:5000/ws';
   private destroyed$: Subject<any> = new Subject<any>();
@@ -23,13 +23,14 @@ export class Comp2Component implements OnInit {
 
   ngOnInit(): void {
 
-     const obj = {Command:'Stock',data:'msft'};
+     const obj = {Command: 'Stock', data: 'msft'};
 
-     this.wsService.getData(obj).pipe(share()).subscribe(
-       x => console.log(x),
-       e => console.error(e),
-       ()=>  console.info('stock complete')
-     ).unsubscribe();
+
+
+    this.wsService.getData(obj).subscribe(x =>
+      {
+        this.results = JSON.parse(x.Payload);
+      });
 
   }
   PropertyChange(event: Event){

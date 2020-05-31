@@ -24,7 +24,7 @@ export class DynoDashboardComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.wsService.connect(this.CHAT_URL).subscribe(messages => {
+    this.wsService.connect().subscribe(messages => {
          switch (messages.MessageType) {
            case 'name': {}
            case 'announce': {
@@ -32,14 +32,14 @@ export class DynoDashboardComponent implements OnInit {
              break;
            }
            default: {
-             //console.log(messages);
+             console.log(messages);
              break;
            }
          }
 
-     }, err => {
-       console.error(err);
-     } );
+  }, err => {
+    console.error(err);
+  } );
 
 
 
