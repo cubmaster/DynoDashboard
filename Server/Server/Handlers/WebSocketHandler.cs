@@ -34,7 +34,7 @@ namespace Server.Handlers
                 var name = Guid.NewGuid().ToString();
                 _users.Add(name, socket);
                 GiveUserTheirName(name, socket).Wait(); //Send the calling user their name
-                AnnounceNewUser(name).Wait(); //Tell everyone else that a new user has joined
+                AnnounceNewUser(name, socket).Wait(); //Tell everyone else that a new user has joined
                
                 
                 
@@ -119,14 +119,14 @@ namespace Server.Handlers
 
         }
 
-        private async Task AnnounceNewUser(string name)
+        private async Task AnnounceNewUser(string name, WebSocket socket)
         {
             var message = new SocketMessage<string>
             {
                 MessageType = "announce",
                 Payload = $"{name} has joined"
             };
-            await SendAll(message.ToJson());
+            await SendToOthers(message.ToJson(), socket);
         }
         private async Task GiveUserTheirName(string name, WebSocket socket)
         {
